@@ -285,10 +285,20 @@ pdfpagemode=FullScreen,
             \frametitle{Monotonicity of $\gamma_{k}\alpha_{k}$}
             Lemma:
             \begin{equation*}
-                \forall X \subseteq \mathcal{C}, \gamma_{1}(\alpha_{1}(X)) \subseteq \gamma_{2}(\alpha_{2}(X)) \cdots \subseteq X
+                \forall X \subseteq \mathcal{C}, X \subseteq \cdots \gamma_{2}(\alpha_{2}(X)) \subseteq \gamma_{1}(\alpha_{1}(X))
             \end{equation*}
-            Proof:
-            
+            Proof:\\
+            Since $\alpha_{k}(S) \subseteq \alpha_{k + 1}(S)$, we define $f_{k + 1}(S)$ as $\alpha_{k + 1}(S) - \alpha_{k}(S)$.
+            Now, $\gamma_{k + 1}(\alpha_{k + 1}(X)) = \{c \in C: \alpha_{k + 1}(c) \subseteq \alpha_{k + 1}(X)\} = \{c \in C: \alpha_{k}(c) \cup f_{k + 1}(c) \subseteq \alpha_{k}(X) \cup f_{k + 1}(X)\}$.
+            Since $\forall M, N, f_{k+1}(M) \cap \alpha_{k}(N) = \emptyset$, this is possible only when $\alpha_{k}(c) \subseteq \alpha_{k}(S)$ and $f_{k+1}(c) \subseteq f_{k + 1}(S)$, ie 
+            \begin{equation*}
+                \gamma_{k + 1}(\alpha_{k + 1}(S)) = \{c \in \mathcal{C}: \alpha_{k}(c) \subseteq \alpha_{k}(S) \land f_{k + 1}(c) \subseteq f_{k + 1}(S)\}
+            \end{equation*}
+            Therefore, 
+            \begin{equation*}
+                \gamma_{k + 1}(\alpha_{k + 1}(S)) \subseteq \{c \in \mathcal{C}: \alpha_{k}(c) \subseteq \alpha_{k}(S)\} = \gamma_{k}(\alpha_{k}(S))
+            \end{equation*}
+            This means that, although $\gamma_{k}(\alpha_{k}())$
         \end{frame}
     }
 
