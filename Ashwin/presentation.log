@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.11.1)  1 MAR 2023 18:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.11.1)  8 MAR 2023 23:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -734,7 +734,7 @@ LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inpu
  (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
 )
-<images/topologies.png, id=191, 348.80313pt x 343.2825pt>
+<images/topologies.png, id=196, 348.80313pt x 343.2825pt>
 File: images/topologies.png Graphic file (type png)
 <use images/topologies.png>
 Package pdftex.def Info: images/topologies.png  used on input line 105.
@@ -759,7 +759,7 @@ Package pdftex.def Info: images/topologies.png  used on input line 105.
 \openout4 = `presentation.vrb'.
 
  (/home/ashwinabraham/GitHub/Uppsala-Internship/Ashwin/presentation.vrb
-<images/codeimg.png, id=411, 282.05376pt x 159.59625pt>
+<images/codeimg.png, id=416, 282.05376pt x 159.59625pt>
 File: images/codeimg.png Graphic file (type png)
 <use images/codeimg.png>
 Package pdftex.def Info: images/codeimg.png  used on input line 5.
@@ -778,6 +778,10 @@ Package pdftex.def Info: images/codeimg.png  used on input line 5.
 
 ] [20
 
+] [21
+
+] [22
+
 ]
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
@@ -788,27 +792,27 @@ Package pdftex.def Info: images/codeimg.png  used on input line 5.
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 364.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 364.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 393.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 393.
  (/home/ashwinabraham/GitHub/Uppsala-Internship/Ashwin/presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 364.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 364.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 393.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 393.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 3BAB76E420DDBE154B42229D502A9010;254.
+(rerunfilecheck)             Checksum: 6EFBD75E994FA548771ECDDAF24301F1;302.
  ) 
 Here is how much of TeX's memory you used:
- 20123 strings out of 481239
- 378424 string characters out of 5920377
+ 20136 strings out of 481239
+ 378540 string characters out of 5920377
  625570 words of memory out of 5000000
- 34857 multiletter control sequences out of 15000+600000
+ 34865 multiletter control sequences out of 15000+600000
  545832 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  58i,15n,67p,851b,722s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on /home/ashwinabraham/GitHub/Uppsala-Internship/Ashwin/presentation.pdf (20 pages, 263881 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on /home/ashwinabraham/GitHub/Uppsala-Internship/Ashwin/presentation.pdf (22 pages, 272275 bytes).
 PDF statistics:
- 652 PDF objects out of 1000 (max. 8388607)
- 596 compressed objects within 6 object streams
- 46 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 715 PDF objects out of 1000 (max. 8388607)
+ 655 compressed objects within 7 object streams
+ 51 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 

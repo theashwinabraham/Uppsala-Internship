@@ -298,7 +298,36 @@ pdfpagemode=FullScreen,
             \begin{equation*}
                 \gamma_{k + 1}(\alpha_{k + 1}(S)) \subseteq \{c \in \mathcal{C}: \alpha_{k}(c) \subseteq \alpha_{k}(S)\} = \gamma_{k}(\alpha_{k}(S))
             \end{equation*}
-            This means that, although $\gamma_{k}(\alpha_{k}())$
+            This means that, although $\gamma_{k}(\alpha_{k}(S))$ is an overapproximation of $S$, as we increase the value of $k$, it becomes a better overapproximation. 
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Some more terminology}
+            If we find a $k$ such that $\mathcal{B} \cap \gamma_{k}(\alpha_{k}(\mathcal{R})) = \emptyset$, then we can conclude that $\mathcal{B} \cap \mathcal{R} = \emptyset$. This is the gist of our algorithm.\\
+            Some more terminology:
+            \begin{itemize}
+                \item For a set of configurations $X \subseteq \mathcal{C}$, we define its \textit{post-image} $post(X)$ as the set $\{\delta(c, i) | c \in X, i \leq |c|, \delta \in \Delta\}$.
+                \item We also define $post^{*}(X) = \{c \in \mathcal{C} : \exists c' \in X : c' \xrightarrow[]{*} c \}$. Since we deal only with transitions that do not change the topology of the system, $\mathcal{R}_{k} = post^{*}(\mathcal{I}_{k})$.
+                \item We define the \textit{abstract post-image} of a set of views $V \subseteq \mathcal{V}_{k}$ as $\alpha_{k}(post(\gamma_{k}(V)))$. This represents the set of views that may be obtained after one transition of the system.
+            \end{itemize}
+        \end{frame}
+    }
+
+    \section{The Algorithm}
+    {
+        \begin{frame}
+            \frametitle{The Algorithm}
+            \begin{itemize}
+                \item The algorithm determines a cutoff point $K$ such that a set of views $V \subseteq \mathcal{V}_{k}$ computed by the algorithm satisfy
+                \begin{enumerate}
+                    \item $Apost_{K}(V) \subseteq V$ and $\mathcal{R} \subseteq \gamma_{k}(V)$
+                    \item $\gamma_{K}(V) \cap \mathcal{B} = \emptyset$
+                \end{enumerate}
+                \item If we can find such a $V$, then we can conclude that $\mathcal{R} \cap \mathcal{B} = \emptyset$.
+                \item We iterate through the values of $k \in \mathbb{N}$ to find such a $V \subseteq \mathcal{V}_{k}$.
+                \item For each value of $k$, we first check that $\mathcal{R}_{k} \cap \mathcal{B} = \emptyset$. If this is not the case, we can stop and say that the system is unsafe.
+                \item We then proceed to calculate a fixed point of $Apost_{k}$ that contains $\alpha_{k}(\mathcal{I})$, ie $X \subseteq \mathcal{V}_{k}$ such that $\alpha_{k}(\mathcal{I}) \subseteq X$ and $Apost_{k}(X) \subseteq X$.
+            \end{itemize}
         \end{frame}
     }
 
