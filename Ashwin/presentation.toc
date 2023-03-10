@@ -3,4 +3,4 @@
 \beamer@sectionintoc {3}{Formalism}{9}{0}{3}
 \beamer@sectionintoc {4}{Szymanski's Protocol}{12}{0}{4}
 \beamer@sectionintoc {5}{View Abstraction}{16}{0}{5}
-\beamer@sectionintoc {6}{The Algorithm}{22}{0}{6}
+\beamer@sectionintoc {6}{The Algorithm and its Implementation}{22}{0}{6}

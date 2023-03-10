@@ -6,6 +6,7 @@
 \usepackage{framed}
 \usepackage{listings}
 \usepackage{amsmath}
+\usepackage{esint}
 \usepackage{hyperref}
 \hypersetup
 {
@@ -267,7 +268,7 @@ pdfpagemode=FullScreen,
         \end{frame}
 
         \begin{frame}
-            \frametitle{Galois Connection}
+            \frametitle{Galois Connection (Lemma 1)}
             \begin{itemize}
                 \item We can order $2^{\mathcal{C}}$ and $2^{\mathcal{V}_{k}}$ by defining $x \leq y$ when $x \subseteq y$, $\forall x, y \in 2^{\mathcal{C}}$ or $\forall x, y \in 2^{\mathcal{V}_{k}}$.
                 \item With this ordering, $\alpha_{k}$ and $\gamma_{k}$ become monotonic functions.
@@ -282,7 +283,7 @@ pdfpagemode=FullScreen,
         \end{frame}
 
         \begin{frame}
-            \frametitle{Monotonicity of $\gamma_{k}\alpha_{k}$}
+            \frametitle{Monotonicity of $\gamma_{k}\alpha_{k}$ (Lemma 2)}
             Lemma:
             \begin{equation*}
                 \forall X \subseteq \mathcal{C}, X \subseteq \cdots \gamma_{2}(\alpha_{2}(X)) \subseteq \gamma_{1}(\alpha_{1}(X))
@@ -313,20 +314,65 @@ pdfpagemode=FullScreen,
         \end{frame}
     }
 
-    \section{The Algorithm}
+    \section{The Algorithm and its Implementation}
     {
         \begin{frame}
             \frametitle{The Algorithm}
             \begin{itemize}
                 \item The algorithm determines a cutoff point $K$ such that a set of views $V \subseteq \mathcal{V}_{k}$ computed by the algorithm satisfy
                 \begin{enumerate}
-                    \item $Apost_{K}(V) \subseteq V$ and $\mathcal{R} \subseteq \gamma_{k}(V)$
+                    \item $\alpha_{k}(\mathcal{I}) \subseteq V$, $Apost_{K}(V) \subseteq V$ and $\mathcal{R} \subseteq \gamma_{k}(V)$
                     \item $\gamma_{K}(V) \cap \mathcal{B} = \emptyset$
                 \end{enumerate}
                 \item If we can find such a $V$, then we can conclude that $\mathcal{R} \cap \mathcal{B} = \emptyset$.
                 \item We iterate through the values of $k \in \mathbb{N}$ to find such a $V \subseteq \mathcal{V}_{k}$.
                 \item For each value of $k$, we first check that $\mathcal{R}_{k} \cap \mathcal{B} = \emptyset$. If this is not the case, we can stop and say that the system is unsafe.
-                \item We then proceed to calculate a fixed point of $Apost_{k}$ that contains $\alpha_{k}(\mathcal{I})$, ie $X \subseteq \mathcal{V}_{k}$ such that $\alpha_{k}(\mathcal{I}) \subseteq X$ and $Apost_{k}(X) \subseteq X$.
+                \item We then proceed to calculate a fixed point $V$ of $\cup Apost_{k}$ that contains $\alpha_{k}(\mathcal{I})$, ie $V \subseteq \mathcal{V}_{k}$ such that $\alpha_{k}(\mathcal{I}) \subseteq V$ and $Apost_{k}(V) \subseteq V$.
+                \item It can be shown that if $\alpha_{k}(\mathcal{I}) \subseteq V$ and $Apost_{K}(V) \subseteq V$, then $\mathcal{R} \subseteq \gamma_{k}(V)$. Therefore, this $V$ satisfies the first condition of our algorithm.
+                \item We thus just have to check whether $\gamma_{k}(V) \cap \mathcal{B} = \emptyset$. If this is the case, we can conclude that the system is safe, and if not, we proceed to the next value of $k$.
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Lemma 3}
+            Lemma: If $\alpha_{k}(\mathcal{I}) \subseteq V$ and $Apost_{k}(V) \subseteq V$, then $\mathcal{R} \subseteq \gamma_{k}(V)$\\
+            Proof:\\
+            If $\alpha_{k}(\mathcal{I}) \subseteq V$, then since $\alpha_{k}$ and $\gamma_{k}$ form a Galois connection, $\mathcal{I} \subseteq \gamma_{k}(V)$.
+            Similiarly, $Apost_{k}(V) = \alpha_{k}(post(\gamma_{k}(V))) \subseteq V \implies post(\gamma_{k}(V)) \subseteq \gamma_{k}(V)$. Therefore, $\gamma_{k}(V)$ contains $\mathcal{I}$ 
+            and is a fixed point of $\cup post$. Therefore, by iteration, $\mathcal{R} = post^{*}(\mathcal{I}) \subseteq \gamma_{k}(V)$.
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{The Implementation}
+            \begin{itemize}
+                \item In order to implement this algorithm, we will need to calculate $R_{k} = post^{*}(\mathcal{I}_{k})$ and $Apost_{k}(V) = \alpha_{k}(post(\gamma_{k}(V)))$.
+                \item $R_{k}$ can be calculated quite easily, by repeatedly applying $\cup post$ on $I_{k}$ until a fixed point is reached. Since $R_{k}$ is finite, this will terminate eventually.
+                \item Calculating $Apost_{k}(V)$ is more difficult, as $\gamma_{k}(V)$ can be infinite. We bypass this problem by computing only $\gamma_{k}(V) \cap \mathcal{C}_{k + 1}$. We show that this is sufficient 
+                to find $Apost_{k}$.
+                \item Formally, for $\ell \geq 0$ and $V \subseteq \mathcal{V}_{k}$, we define 
+                \begin{equation*}
+                    \oint\limits_{k}^{\ell} V = \{c \in \mathcal{C} : \alpha_{k}(c) \subseteq V \wedge \left|c\right| \leq \ell\}
+                \end{equation*}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Lemma 4}
+            Lemma: For any $V \subseteq \mathcal{V}_{k}$,
+            \begin{equation*}
+                V \cup Apost_{k}(V) = V \cup \alpha_{k}(post(\oint\limits_{k}^{k + 1}V))
+            \end{equation*}
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{Proof}
+            TODO
+        \end{frame}
+
+        \begin{frame}
+            \frametitle{The Implementation}
+            \begin{itemize}
+                \item The last step in the algorithm is to check whether $\gamma_{k}(V) \cap \mathcal{B} = \emptyset$
             \end{itemize}
         \end{frame}
     }
