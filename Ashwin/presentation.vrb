@@ -1,8 +1,0 @@
-\frametitle{Szymanski's Protocol}
-            The pseudocode for this protocol is as follows:
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[scale=1]{images/codeimg.png}
-                    % \caption{}
-                \end{center}
-            \end{figure}
