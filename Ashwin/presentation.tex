@@ -229,7 +229,7 @@ pdfpagemode=FullScreen,
                 \item On a high level, we can say that this occurs because the patterns that occur for lower values of the parameter repeat themselves for larger values.
                 \item The configurations for higher parameters cover those of lower parameters, in a sense.
                 \item Our algorithm automatically detects a cutoff point $n$ such that we only need to compute $\mathcal{R}_{1}, \mathcal{R}_{2} \cdots \mathcal{R}_{n}$ to determine whether $\mathcal{R} \cap \mathcal{B} = \emptyset$. 
-                \item To do this, we perform \textit{overapproximation}, where we abstract the system such that $R \subseteq R'$. Now if we are able to show $R' \cap B = \emptyset$, we can conclude that $R \cap B = \emptyset$.
+                \item To do this, we perform \textit{overapproximation}, where we abstract the system such that $\mathcal{R} \subseteq R'$. Now if we are able to show $\mathcal{R}' \cap B = \emptyset$, we can conclude that $\mathcal{R} \cap B = \emptyset$.
             \end{itemize}
         \end{frame}
 
@@ -319,9 +319,9 @@ pdfpagemode=FullScreen,
         \begin{frame}
             \frametitle{The Algorithm}
             \begin{itemize}
-                \item The algorithm determines a cutoff point $K$ such that a set of views $V \subseteq \mathcal{V}_{k}$ computed by the algorithm satisfy
+                \item The algorithm determines a cutoff point $K$ such that a set of views $V \subseteq \mathcal{V}_{K}$ computed by the algorithm satisfy
                 \begin{enumerate}
-                    \item $\alpha_{k}(\mathcal{I}) \subseteq V$, $Apost_{k}(V) \subseteq V$ and $\mathcal{R} \subseteq \gamma_{k}(V)$
+                    \item $\alpha_{K}(\mathcal{I}) \subseteq V$, $Apost_{K}(V) \subseteq V$ and $\mathcal{R} \subseteq \gamma_{K}(V)$
                     \item $\gamma_{K}(V) \cap \mathcal{B} = \emptyset$
                 \end{enumerate}
                 \item If we can find such a $V$, then we can conclude that $\mathcal{R} \cap \mathcal{B} = \emptyset$.
@@ -345,8 +345,8 @@ pdfpagemode=FullScreen,
         \begin{frame}
             \frametitle{The Implementation}
             \begin{itemize}
-                \item In order to implement the first step of the algorithm, we will need to calculate $R_{k} = post^{*}(\mathcal{I}_{k})$.
-                \item This can be done quite easily, by repeatedly applying $\cup post$ on $I_{k}$ until a fixed point is reached. Since $R_{k}$ is finite, this will terminate eventually.
+                \item In order to implement the first step of the algorithm, we will need to calculate $\mathcal{R}_{k} = post^{*}(\mathcal{I}_{k})$.
+                \item This can be done quite easily, by repeatedly applying $\cup post$ on $\mathcal{I}_{k}$ until a fixed point is reached. Since $\mathcal{R}_{k}$ is finite, this will terminate eventually.
                 \item For the second step of the algorithm, we first set $V = \alpha_{k}(\mathcal{I})$. $\mathcal{I}$ is usually a regular set, and therefore we can construct an automaton accepting only subwords of $\mathcal{I}$ of size atmost $k$. $\alpha_{k}(\mathcal{I})$ is then the set of words in $\mathcal{V}_{k}$ accepted by this automaton. 
                 \item We then repeatedly apply $V \leftarrow V \cup Apost_{k}(V)$ until a fixed point is obtained. Since $V \subseteq \mathcal{V}_{k}$ which is a finite set, a fixed point will always be obtained after a finite number of iterations.
                 \item The only problem is in computing $Apost_{k}(V)$, as $\gamma_{k}(V)$ can be infinite. We bypass this problem by computing only $\gamma_{k}(V) \cap \mathcal{V}_{k + 1}$. We show that this is sufficient 
@@ -366,6 +366,42 @@ pdfpagemode=FullScreen,
                 \end{equation*}
         \end{frame}
 
+        \begin{frame}{Proof of Lemma 4}
+            Some terminology - for a configuration $c \in \mathcal{C}$ and a set $\mathbb{P} = \{i_{1}\cdots i_{k}\} \subseteq \{1\cdots \left|c\right|\}$, denote the view $c_{i_{1}}\cdots c_{i_{k}}$ as $view(c, \mathbb{P})$.
+
+            Two observations:
+            \begin{enumerate}
+                % \item $\forall c_{1}, c_{2} \in \mathcal{C}$ and for all sets $\mathbb{P}$ and transitions $\delta \in \Delta$, $view(c_{1}, \mathbb{P}) \xrightarrow[]{\delta} view(c_{2}, \mathbb{P}) \implies c_{1} \xrightarrow[]{\delta} c_{2}$.
+                \item If $\delta \in \Delta$ is a local transition or a universally quantified transition, $\forall c_{1}, c_{2} \in \mathcal{C}$, if $c_{1} \xrightarrow[]{\delta} c_{2}$, then for all sets $\mathbb{P}$, either $view(c_{1}, \mathbb{P}) = view(c_{2}, \mathbb{P})$ or $view(c_{1}, \mathbb{P}) \xrightarrow[]{\delta} view(c_{2}, \mathbb{P})$.
+                \item If $\delta \in \Delta$ is an existentially quantified transition, say of the form $\exists j \sim i : s_{j} \in S \implies s_{i} \rightarrow s'_{i}$ and $c_{1} \xrightarrow[]{\delta} c_{2}$, then if the set $\mathbb{P}$ contains both $i$ and $j$ (ie both the transitioning state and the witness), then $view(c_{1}, \mathbb{P}) \xrightarrow[]{\delta} view(c_{2}, \mathbb{P})$. 
+                
+                If $i \notin \mathbb{P}$, then clearly $view(c_{1}, \mathbb{P}) = view(c_{2}, \mathbb{P})$.
+            \end{enumerate}
+        \end{frame}
+
+        \begin{frame}{Proof of Lemma 4}
+            Now, by definition, $\oint\limits_{k}^{k + 1} V \subseteq \gamma_{k}(V)$, and therefore $V \cup \alpha_{k}(post(\oint\limits_{k}^{k + 1} V)) \subseteq V \cup Apost_{k}(V)$. %To prove the lemma we %just have to show that $\forall v \in Apost_{k}(V) - V, v \in \alpha_{k}(post(\oint\limits_{k}^{k + 1} V))$, ie $\exists c \in post(\oint\limits_{k}^{k + 1} V): v \sqsubseteq c$, ie $\exists c \in V: c \rightarrow c' \wedge v \sqsubseteq c' \wedge \left|c\right| \leq k + 1$
+            % show that $\forall c \in \gamma_{k}(V), c' \in \mathcal{C}: c \rightarrow c' \implies \forall \mathbb{P}: \left|\mathbb{P}\right| \leq k \implies (view(c', \mathbb{P}) \in V \lor \exists c'' \in gamma_{k}(V): \left|c'\right| \leq k + 1 \land view(c', \mathbb{P}) = view(c', \mathbb{P}))$.
+            To prove the lemma, we need to show that $Apost_{k}(V) \subseteq V \cup \alpha_{k}(post(\oint\limits_{k}^{k + 1} V))$. Expanding definitions, this is equivalent to showing that $\forall v \in \mathcal{V}_{k}$: If $\exists c \in \gamma_{k}(V), c' \in \mathcal{C}$ such that $c \xrightarrow[]{\delta} c'$ and $v \sqsubseteq c'$ then either $v \in V$ or $\exists c'' \in \gamma_{k}(V)$ with size at most $k + 1$ and $\exists c''' \in \mathcal{C}$ such that $c'' \xrightarrow[]{\delta} c'''$ and $v \sqsubseteq c'''$.
+
+            Now, if the view $v$ has a configuration $c$ as mentioned with $\left|c\right| \leq k + 1$, then we are done, as we can just put $c'' = c$ and $c''' = c'$. Therefore, we only have to worry about configurations $c$ with $\left|c\right| > k + 1$. %We prove that for all such configurations $c$ where $\exists c' \in \mathcal{C}: c \xrightarrow[]{\delta} c' \land v \sqsubseteq c'$, 
+            For such configurations we prove that either $v \in V$ or $\exists c'' \in \gamma_{k}(V)$ with size at most $k + 1$ such that $\exists c''' \in \mathcal{C}$ such that $c'' \xrightarrow[]{\delta} c'''$ and $v \sqsubseteq c'''$, after which we are clearly done.
+            % $ \implies v \in V \lor $
+        \end{frame}
+
+        \begin{frame}{Proof of Lemma 4}
+            Notice that since $c \in \gamma_{k}(V)$, for any view $v \sqsubseteq c$, $v \in \gamma_{k}(V)$. This is as $\alpha_{k}(c) \subseteq V$ and for any view $v \sqsubseteq c$, $\alpha_{k}(v) \subseteq \alpha_{k}(c)$. If $v$ has size at most $k$, then we also have $v \in \alpha_{k}(c) \implies v \in V$.
+
+            Let the set of indices in $c'$ corresponding to $v$ be $\mathbb{P}$, ie $v = view(c', \mathbb{P})$, and let the transitioning state in $c \xrightarrow[]{\delta} c'$ be $i$. If $i \notin \mathbb{P}$, then $v = view(c, \mathbb{P})$, which implies that $v \in V$ (since $v$ has size at most $k$). Now, assume $i \in \mathbb{P}$.
+
+            If $\delta$ is a local or universally quantified transition, then $view(c, \mathbb{P}) \xrightarrow[]{\delta} v$ is a transition as well, and so we can pick $c'' = view(c, \mathbb{P})$ and $c''' = view(c', \mathbb{P})$, and we're done.
+            
+            If $\delta$ is instead existentially quantified, let the witness corresponding to the transition be $j$. %If $j \in \mathbb{P}$, then $view(c, \mathbb{P}) \xrightarrow[]{\delta} v$ is a transition, 
+            We choose $c'' = view(c, \mathbb{P} \cup \{j\})$ and $c''' = view(c', \mathbb{P} \cup \{j\})$. Clearly, $c'' \xrightarrow[]{\delta} c'''$ is a transition. Since $\left|\mathbb{P}\right| \leq k$, $c''$ has size at most $k + 1$, and $c'' \in \gamma_{k}(V)$ since it is a view of $c$. We also have $v \sqsubseteq c'''$. Therefore, these satisfy all the conditions, and we're done.
+
+            $\qed$
+        \end{frame}
+
         % \begin{frame}
         %     \frametitle{Proof}
         %     % \texttt{// TODO}
@@ -377,7 +413,7 @@ pdfpagemode=FullScreen,
             \begin{itemize}
                 \item The last step in the algorithm is to check whether $\gamma_{k}(V) \cap \mathcal{B} = \emptyset$.
                 \item This is done by checking if there is any $b \in \mathcal{B}$ such that $b \in \gamma_{k}(V)$, ie $\alpha_{k}(b) \subseteq V$.
-                \item In general, $\mathcal{B}$ is infinite. However, it is sufficient to check the elements of $\mathcal{B} \cap \mathcal{V}_{K}$, where $K$ is the size of the largest configuration in the (finite) set of minimal bad configurations $\mathcal{B}_{min}$. 
+                \item In general, $\mathcal{B}$ is infinite. However, it is sufficient to check the elements of $\mathcal{B} \cap \mathcal{V}_{K}$, where $K$ is the size of the largest configuration in the (finite) set of minimal bad configurations $\mathcal{B}_{min}$ ($\mathcal{B}$ is the set of superwords of words in $\mathcal{B}_{min}$). 
                 \item We can keep iterating till $k \geq K$, so WLOG we can assume $k \geq K$.
                 \item This is as if there is any $b \in \mathcal{B}$ such that $\alpha_{k}(b) \subseteq V$, then every view of $b$ of size upto $k$ is in $V$. If none of the views of size upto $K$ are in the minimal bad set $\mathcal{B}_{min}$, then this means that $b \notin \mathcal{B}$. 
                 \item Therefore, if there is a $b \in \mathcal{B}$ such that $\alpha_{k}(b) \subseteq V$, then there is a view of $b$ of size at most $k$ that is in $\mathcal{B}_{min}$. Call this view $b'$. $b'$ will have $\alpha_{k}(b') \subseteq \alpha_{k}(b) \subseteq V$.
@@ -385,14 +421,26 @@ pdfpagemode=FullScreen,
             \end{itemize}
         \end{frame}
 
-        \begin{frame}
-            \frametitle{An Optimization}
-            \begin{itemize}
-                \item In the fixed point computation, we can start with $\alpha_{k}(\mathcal{R}_{k})$ instead of $\alpha_{k}(\mathcal{I})$.
-                \item We can also show that $\alpha_{k}(\mathcal{R}_{k}) \subseteq V \land Apost_{k}(V) \subseteq V \implies \mathcal{R} \subseteq \gamma_{k}(V)$.
-                \item The same proof from earlier holds. This is as $\alpha_{}$
-            \end{itemize}
-        \end{frame}
+        
+
+        % \begin{frame}{Another Lemmas}
+        %     This lemma follows directly from the fact that $\mathcal{B}$ is the upward closure (ie set of superwords) of the finite set $\mathcal{B}_{min}$.
+        %     \begin{equation*}
+        %         % \item $\forall V \subseteq \mathcal{V}_{k}, V \cap \mathcal{B}_{min} = \emptyset \iff \gamma_{k}(V) \cap \mathcal{B} = \emptyset$
+        %         \forall V \subseteq \mathcal{V}_{k}, V \cap \mathcal{B} = \emptyset \iff \alpha_{k}(V) \cap \mathcal{B}_{min} = \emptyset
+        %     \end{equation*}
+        %     To prove this, note that if $V \cap \mathcal{B} = \emptyset$, then no element of $v$ should have a subword in $\mathcal{B}_{min}$, ie $\alpha_{k}(V) \cap \mathcal{B}_{min} = \emptyset$. Also, if there is an element $v$ of $V$ also in $\mathcal{B}$, then there is a view of $v$ in $\mathcal{B}_{min}$, ie $\alpha_{k}(V) \cap \mathcal{B}_{min} \neq \emptyset$. $\qed$
+
+        %     % To prove the second lemma, note that if there is an element $v$ of $V$ also in $\mathcal{B}_{min}$
+        % \end{frame}
+
+        % \begin{frame}{An Optimized Algorithm}
+        %     % We can use the fact that $\mathcal{B}$ is the set of superwords (the upward closure) of the finite set $\mathcal{B}_{min}$ to optimize our algorithm. This means, that for $V \subseteq \mathcal{V}_{k}$, $V \cap \mathcal{B} = \emptyset \iff \alpha_{k}(V) \cap \mathcal{B}_{min} = \emptyset$.
+        %     \begin{itemize}
+        %         \item The check for unsafeness becomes $\alpha_{k}(\mathcal{R}_{k}) \cap \mathcal{B}_{min} \neq \emptyset$. This is satisfied iff there is a reachable bad state of size $k$.
+        %         \item We find $V \subseteq \mathcal{V}_{k}$ such that $\alpha_{k}(\mathcal{R}_{k}) \subseteq V$ and $Apost_{k}(V) \subseteq V$. Now, if $V \cap \mathcal{B}_{min} = \emptyset$, then the system is safe, ie $\mathcal{R} \cap \mathcal{B} = \emptyset$.
+        %     \end{itemize}
+        % \end{frame}
     }
 
 
