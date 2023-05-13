@@ -7,4 +7,9 @@ TODO: Parse C/C++ programs as input
 '''
 
 def is_bad(config: str) -> bool:
-    pass
+    num = 0
+    for x in config:
+        if x == '9' or x == '10':
+            num += 1
+    return num <= 1
+
