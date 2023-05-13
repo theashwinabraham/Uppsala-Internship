@@ -1,4 +1,3 @@
-import copy
 # Ashwin Abraham, 2023
 
 '''
@@ -93,7 +92,7 @@ def integral(k: int, l: int, V: set) -> set:
         cset = ncset
     return retset
 
-def safe() -> bool:
+def safe() -> bool: # type: ignore
     k = 0
     Bmin = {'55'}
     while k := k + 1:
